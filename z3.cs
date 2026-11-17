@@ -1,12 +1,22 @@
 using System;
+using System.Collections.Generic;
 
 class Program {
     static void Main() {
-        double sum = 0;
-        for (int i = 1; i <= 7; i++) {
-            Console.Write($"Введите температуру за {i}-й день: ");
-            sum += double.Parse(Console.ReadLine());
+        List<int> numbers = new List<int>();
+        HashSet<int> seen = new HashSet<int>();
+
+        Console.WriteLine("Вводите числа (ввод остановится при повторе):");
+        while (true) {
+            int num = int.Parse(Console.ReadLine());
+            if (seen.Contains(num)) {
+                break; 
+            }
+            seen.Add(num);
+            numbers.Add(num);
         }
-        Console.WriteLine($"Средняя температура: {sum / 7:F2}");
+
+        Console.WriteLine("\nВведенный массив:");
+        Console.WriteLine(string.Join(" ", numbers));
     }
 }

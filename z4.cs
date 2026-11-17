@@ -1,19 +1,40 @@
 using System;
+using System.Collections.Generic;
 
 class Program {
     static void Main() {
-        double[] averages = new double[3];
+        Dictionary<string, string> phoneBook = new Dictionary<string, string>();
 
-        for (int i = 0; i < 3; i++) {
-            Console.WriteLine($"Студент {i + 1}:");
-            double sum = 0;
-            for (int j = 0; j < 5; j++) {
-                Console.Write($"Оценка {j + 1}: ");
-                sum += double.Parse(Console.ReadLine());
+        while (true) {
+            Console.WriteLine("\nКоманды: add (добавить), find (поиск), show (все), exit (выход)");
+            Console.Write("Введите команду: ");
+            string cmd = Console.ReadLine().ToLower();
+
+            if (cmd == "exit") break;
+
+            if (cmd == "add") {
+                Console.Write("Введите имя: ");
+                string name = Console.ReadLine();
+                Console.Write("Введите номер телефона: ");
+                string phone = Console.ReadLine();
+                phoneBook[name] = phone; 
+                Console.WriteLine("Контакт сохранен.");
             }
-            averages[i] = sum / 5;
+            else if (cmd == "find") {
+                Console.Write("Введите имя для поиска: ");
+                string name = Console.ReadLine();
+                if (phoneBook.TryGetValue(name, out string phone)) {
+                    Console.WriteLine($"Телефон {name}: {phone}");
+                } else {
+                    Console.WriteLine("Контакт не найден.");
+                }
+            }
+            else if (cmd == "show") {
+                Console.WriteLine("Все контакты:");
+                foreach (var kvp in phoneBook) {
+                    Console.WriteLine($"{kvp.Key}: {kvp.Value}");
+                }
+            }
         }
-
-        Console.WriteLine($"Средние оценки: {averages[0]:F2}, {averages[1]:F2}, {averages[2]:F2}");
     }
 }
